@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import org.example.personalfinancetracker.ui.screens.LoginScreen
 import org.example.personalfinancetracker.ui.screens.MainScreen
 import org.example.personalfinancetracker.ui.theme.PersonalFinanceTrackerTheme
+import org.example.personalfinancetracker.viewModels.HomeViewModel
 import org.example.personalfinancetracker.viewModels.LoginViewModel
 
 //@HiltAndroidApp
@@ -51,13 +52,14 @@ fun Greeting(modifier: Modifier = Modifier, dependencies: AppDependencies) {
     val firestore = FirebaseFirestore.getInstance()
     val authRepository = FirebaseAuthRepository(auth, firestore, dependencies)
     val logInViewModel = LoginViewModel(authRepository)
+    val homeViewModel = HomeViewModel(authRepository)
     NavHost(
         navController = navController,
         startDestination = if (isLoggedIn) "main" else "login",
         modifier = modifier
     ) {
         composable("login") { LoginScreen(navController, logInViewModel) }
-        composable("main") { MainScreen(navController) }
+        composable("main") { MainScreen(navController, homeViewModel) }
     }
 }
 
