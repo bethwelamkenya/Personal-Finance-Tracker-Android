@@ -19,6 +19,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    configurations.all {
+        resolutionStrategy {
+            force("org.jetbrains:annotations:23.0.0")
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -51,13 +56,13 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.common.ktx)
-    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.firestore) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.hilt.compiler){
-        exclude(group = "com.intellij", module = "annotations")
-    }
+    implementation(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.common)
     implementation(libs.firebase.auth.ktx)
     testImplementation(libs.junit)
