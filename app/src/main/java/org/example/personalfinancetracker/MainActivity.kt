@@ -7,22 +7,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import org.example.personalfinancetracker.ui.screens.LoginScreen
 import org.example.personalfinancetracker.ui.screens.MainScreen
 import org.example.personalfinancetracker.ui.theme.PersonalFinanceTrackerTheme
+import org.example.personalfinancetracker.viewModels.LoginViewModel
 
-@HiltAndroidApp
-@AndroidEntryPoint
+//@HiltAndroidApp
+//@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,13 +47,17 @@ class MainActivity : ComponentActivity() {
 fun Greeting(modifier: Modifier = Modifier, dependencies: AppDependencies) {
     val navController = rememberNavController()
     val isLoggedIn = false // Replace with actual auth state check
-
+    val auth = FirebaseAuth.getInstance()
+    val firestore = FirebaseFirestore.getInstance()
+    val authRepository = FirebaseAuthRepository(auth, firestore, dependencies)
+    val logInViewModel = LoginViewModel(authRepository)
     NavHost(
         navController = navController,
-        startDestination = if (isLoggedIn) "main" else "login"
+        startDestination = if (isLoggedIn) "main" else "login",
+        modifier = modifier
     ) {
-        composable("login") { LoginScreen(navController) }
-        composable("main") { MainScreen() }
+        composable("login") { LoginScreen(navController, logInViewModel) }
+        composable("main") { MainScreen(navController) }
     }
 }
 

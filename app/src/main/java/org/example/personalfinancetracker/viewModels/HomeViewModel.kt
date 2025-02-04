@@ -4,7 +4,6 @@ import android.util.Patterns
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,9 +12,8 @@ import org.example.personalfinancetracker.AuthRepository
 import org.example.personalfinancetracker.utils.Result
 import javax.inject.Inject
 
-@HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+class HomeViewModel @Inject constructor(
+private val authRepository: AuthRepository
 ) : ViewModel() {
     val email = mutableStateOf("")
     val password = mutableStateOf("")
@@ -81,7 +79,7 @@ class LoginViewModel @Inject constructor(
     }
 }
 
-data class LoginUiState(
+data class HomeUiState(
     val isLoading: Boolean = false,
     val isLoginSuccessful: Boolean = false,
     val emailError: String? = null,

@@ -4,7 +4,7 @@ import org.example.personalfinancetracker.models.BankAccount
 import org.example.personalfinancetracker.utils.Result
 
 interface AuthRepository {
-    suspend fun login(email: String, password: String): Result<Unit>
+    suspend fun login(email: String, password: String): Result<BankAccount>
     suspend fun register(email: String, password: String): Result<Unit>
     suspend fun log_in(accountNumber: String, pin: String, dbConnector: FirebaseDBConnector): Result<String>
     suspend fun createUserProfile(userId: String, userData: Map<String, Any>): Result<String>

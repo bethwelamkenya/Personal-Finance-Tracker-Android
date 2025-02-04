@@ -45,31 +45,86 @@ android {
     }
 }
 
+//configurations.all {
+//    resolutionStrategy.eachDependency { details ->
+//        if (details.requested.group == "com.intellij" && details.requested.name == "annotations") {
+//            // Redirect any request for com.intellij:annotations to org.jetbrains:annotations:23.0.0
+//            details.useTarget 'org.jetbrains:annotations:23.0.0'
+//        }
+//    }
+//}
+
+
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.firebase.common.ktx)
+    implementation("org.jetbrains:annotations:23.0.0")
+    implementation(libs.androidx.core.ktx) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.lifecycle.runtime.ktx) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.activity.compose) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(platform(libs.androidx.compose.bom)) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.ui) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.ui.graphics) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.ui.tooling.preview) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.material3) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.firebase.common.ktx) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
     implementation(libs.firebase.firestore) {
         exclude(group = "com.intellij", module = "annotations")
     }
-    implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.hilt.compiler)
-    implementation(libs.androidx.hilt.common)
-    implementation(libs.firebase.auth.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.navigation.runtime.ktx) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.navigation.compose) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.hilt.navigation.compose) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.hilt.compiler) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.androidx.hilt.common) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    implementation(libs.firebase.auth.ktx) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    testImplementation(libs.junit) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    androidTestImplementation(libs.androidx.junit) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    androidTestImplementation(libs.androidx.espresso.core) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    androidTestImplementation(platform(libs.androidx.compose.bom)) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    androidTestImplementation(libs.androidx.ui.test.junit4) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    debugImplementation(libs.androidx.ui.tooling) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+    debugImplementation(libs.androidx.ui.test.manifest) {
+        exclude(group = "com.intellij", module = "annotations")
+    }
 }

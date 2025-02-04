@@ -1,5 +1,6 @@
 package org.example.personalfinancetracker
 
+import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -44,6 +45,32 @@ class FirebaseDBConnector {
         }
     } catch (e: Exception) {
         Result.Failure(e)
+    }// Add this to your FirebaseDBConnector class
+
+    suspend fun getAccountByEmail(email: String, pin: String): Result<BankAccount> = try {
+        val querySnapshot = firestore.collection("bank_accounts")
+            .whereEqualTo("email", email) // Ensure you have an 'email' field in your documents
+            .limit(1) // Since email should be unique
+            .get()
+            .await()
+
+        if (querySnapshot.isEmpty) {
+            Result.Failure(Exception("No account found with this email"))
+        } else {
+            val document = querySnapshot.documents[0]
+            val storedPin = document.getString("pin")
+            if (storedPin == pin.trim()) {
+                val account = document.toObject(BankAccount::class.java)!!.apply {
+                    accountNumber = document.id // Set the document ID as account number
+                }
+                Result.Success(account)
+            } else {
+                Result.Failure(Exception("Incorrect PIN"))
+            }
+        }
+    } catch (e: Exception) {
+        Log.e("FirebaseDBConnector", "Error getting account by email", e)
+        Result.Failure(e)
     }
 
     suspend fun updateBankAccount(account: BankAccount): Result<Unit> = try {
@@ -64,6 +91,7 @@ class FirebaseDBConnector {
     } catch (e: Exception) {
         Result.Failure(e)
     }
+
     suspend fun addTransaction(transaction: Transaction): Result<String> = try {
         val data = hashMapOf(
             "account" to transaction.account,
@@ -82,6 +110,7 @@ class FirebaseDBConnector {
     } catch (e: Exception) {
         Result.Failure(e)
     }
+
     suspend fun getTransactionsForAccount(accountNumber: String): Result<List<Transaction>> = try {
         val querySnapshot = firestore.collection("transactions")
             .whereEqualTo("account", accountNumber)
@@ -98,6 +127,7 @@ class FirebaseDBConnector {
     } catch (e: Exception) {
         Result.Failure(e)
     }
+
     suspend fun addSavingsGoal(savings: SavingsGoal): Result<String> = try {
         val data = hashMapOf(
             "accountNumber" to savings.accountNumber,
@@ -131,6 +161,7 @@ class FirebaseDBConnector {
     } catch (e: Exception) {
         Result.Failure(e)
     }
+
     suspend fun depositToAccount(accountNumber: String, amount: Double): Result<Unit> = try {
         firestore.runTransaction { transaction ->
             val docRef = firestore.collection("bank_accounts").document(accountNumber)
@@ -161,6 +192,7 @@ class FirebaseDBConnector {
     } catch (e: Exception) {
         Result.Failure(e)
     }
+
     suspend fun transferFundsToAccount(
         fromAccount: String,
         toAccount: String,
@@ -188,6 +220,7 @@ class FirebaseDBConnector {
     } catch (e: Exception) {
         Result.Failure(e)
     }
+
     suspend fun deleteAccount(accountNumber: String): Result<Unit> = try {
         firestore.collection("bank_accounts")
             .document(accountNumber)
@@ -199,21 +232,22 @@ class FirebaseDBConnector {
         Result.Failure(e)
     }
 
-    suspend fun updatePin(accountNumber: String, oldPin: String, newPin: String): Result<Unit> = try {
-        firestore.runTransaction { transaction ->
-            val docRef = firestore.collection("bank_accounts").document(accountNumber)
-            val snapshot = transaction.get(docRef)
-            val currentPin = snapshot.getString("pin") ?: ""
+    suspend fun updatePin(accountNumber: String, oldPin: String, newPin: String): Result<Unit> =
+        try {
+            firestore.runTransaction { transaction ->
+                val docRef = firestore.collection("bank_accounts").document(accountNumber)
+                val snapshot = transaction.get(docRef)
+                val currentPin = snapshot.getString("pin") ?: ""
 
-            if (currentPin == oldPin) {
-                transaction.update(docRef, "pin", newPin)
-            } else {
-                throw Exception("Invalid old PIN")
-            }
-        }.await()
+                if (currentPin == oldPin) {
+                    transaction.update(docRef, "pin", newPin)
+                } else {
+                    throw Exception("Invalid old PIN")
+                }
+            }.await()
 
-        Result.Success(Unit)
-    } catch (e: Exception) {
-        Result.Failure(e)
-    }
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Failure(e)
+        }
 }

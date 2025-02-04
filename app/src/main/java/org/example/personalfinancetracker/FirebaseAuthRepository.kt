@@ -9,14 +9,12 @@ import org.example.personalfinancetracker.utils.Result
 
 class FirebaseAuthRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val dependencies: AppDependencies
 ) : AuthRepository {
 
-    override suspend fun login(email: String, password: String): Result<Unit> = try {
-        auth.signInWithEmailAndPassword(email, password).await()
-        Result.Success(Unit)
-    } catch (e: Exception) {
-        Result.Failure(e)
+    override suspend fun login(email: String, password: String): Result<BankAccount> {
+        return dependencies.dbConnector.getAccountByEmail(email, dependencies.encryptionHelper.encryptText(password, dependencies.key))
     }
 
     override suspend fun register(email: String, password: String): Result<Unit> = try {
