@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "557657859520",
+    "project_id": "my-banking-project-62e2a",
+    "storage_bucket": "my-banking-project-62e2a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557657859520:android:db4ed5b46b502ca43a1425",
+        "android_client_info": {
+          "package_name": "org.example.personalfinancetracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOIEAMnNDK43kgNsy0a5A_Dxlavv-GTU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
