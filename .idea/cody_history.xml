@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChatHistory">
+    <accountData>
+      <list>
+        <AccountData>
+          <accountId value="VXNlcjoxMzEyNzQ=" />
+          <chats>
+            <list>
+              <chat>
+                <internalId value="f9f9da26-aa54-41d1-a59c-fe852dc7049e" />
+                <llm>
+                  <llm>
+                    <model value="ollama/deepseek-r1:1.5b" />
+                    <provider value="Ollama" />
+                    <tags>
+                      <list>
+                        <option value="local" />
+                        <option value="ollama" />
+                        <option value="experimental" />
+                      </list>
+                    </tags>
+                    <title value="deepseek r1:1.5b" />
+                    <usage>
+                      <list>
+                        <option value="chat" />
+                        <option value="edit" />
+                      </list>
+                    </usage>
+                  </llm>
+                </llm>
+              </chat>
+              <chat>
+                <internalId value="8fd19884-d990-42ed-a2ec-3877f9bb08bc" />
+                <llm>
+                  <llm>
+                    <model value="ollama/deepseek-r1:1.5b" />
+                    <provider value="Ollama" />
+                    <tags>
+                      <list>
+                        <option value="local" />
+                        <option value="ollama" />
+                        <option value="experimental" />
+                      </list>
+                    </tags>
+                    <title value="deepseek r1:1.5b" />
+                    <usage>
+                      <list>
+                        <option value="chat" />
+                        <option value="edit" />
+                      </list>
+                    </usage>
+                  </llm>
+                </llm>
+              </chat>
+            </list>
+          </chats>
+          <defaultLlm>
+            <llm>
+              <model value="ollama/deepseek-r1:1.5b" />
+              <provider value="Ollama" />
+              <tags>
+                <list>
+                  <option value="local" />
+                  <option value="ollama" />
+                  <option value="experimental" />
+                </list>
+              </tags>
+              <title value="deepseek r1:1.5b" />
+              <usage>
+                <list>
+                  <option value="chat" />
+                  <option value="edit" />
+                </list>
+              </usage>
+            </llm>
+          </defaultLlm>
+        </AccountData>
+      </list>
+    </accountData>
+  </component>
+</project>
